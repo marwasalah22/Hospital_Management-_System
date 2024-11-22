@@ -1,0 +1,229 @@
+﻿@*  @model IEnumerable<Hospital_Management__System.Models.Doctor>
+
+    @{
+    ViewData["Title"] = "Index";
+    }
+ *@
+@*         <p>
+            <a class="icon fs-5" asp-action="Create">
+                <i class="bi bi-plus-circle"></i>
+                Add Doctor
+            </a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="fs-5">
+                        Doctor
+                    </th>
+                    <th class="fs-5">
+                        Department
+                    </th>
+                    <th class="fs-5">
+                        Nurse
+                    </th>
+                    <th class="fs-5">
+                        Schedule
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doctor in Model)
+                {
+                    <tr>
+                        <td class="fs-6">
+                            @Html.DisplayFor(modelItem => doctor.DoctorName)
+                        </td>
+                        <td class="fs-6">
+                            @Html.DisplayFor(modelItem => doctor.Department)
+                        </td>
+                        <td class="fs-6">
+                            @Html.DisplayFor(modelItem => doctor.Nurse.NurseName)
+                        </td>
+                        <td class="fs-6">
+                            @Html.DisplayFor(modelItem => doctor.Schedule)
+                        </td>
+
+                        <td class="fs-6">
+                            <a asp-action="Update" asp-route-id="@doctor.DoctorId">Edit</a> |
+
+                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+ *@
+
+
+
+       @* @foreach (var doctor in Model)
+                    {
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete @doctor.DoctorName?
+                        </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a type="button" asp-action="Delete"  class="btn btn-primary">Delete</a>
+                            </div>
+                    </div>
+                </div>
+                </div>
+        }*@
+
+    @*
+        @model IEnumerable<Hospital_Management__System.Models.Doctor>
+
+        @{
+            ViewData["Title"] = "Index";
+        }
+
+        <p>
+            <a class="icon fs-5" asp-action="Create">
+                <i class="bi bi-plus-circle"></i>
+                Add Doctor
+            </a>
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="fs-5">Doctor</th>
+                    <th class="fs-5">Department</th>
+                    <th class="fs-5">Nurse</th>
+                    <th class="fs-5">Schedule</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doctor in Model)
+                {
+                    <tr>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.DoctorName)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.Department)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.Nurse.NurseName)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.Schedule)</td>
+                        <td class="fs-6">
+                            <a asp-action="Update" asp-route-id="@doctor.DoctorId">Edit</a> |
+                            <a style="color:red;" data-bs-toggle="modal" data-bs-target="#deleteModal-@doctor.DoctorId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @foreach (var doctor in Model)
+        {
+            <!-- Modal for each doctor -->
+            <div class="modal fade" style="margin-top:10%; margin-left:35%; width:24%;" id="deleteModal-@doctor.DoctorId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel-@doctor.DoctorId" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 style="margin-left:40%;"><i style="color:red;" class="bi bi-exclamation-circle"></i></h1>
+
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete @doctor.DoctorName?
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            <!-- Form to handle delete -->
+                            <form style="margin-right:30%;" asp-action="Delete" asp-route-id="@doctor.DoctorId" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    *@
+
+
+    @model IEnumerable<Hospital_Management__System.Models.Doctor>
+
+        @{
+            ViewData["Title"] = "Index";
+        }
+
+<h3 style="margin-top:2%; margin-left:4%;" class="fw-semibold">Doctors</h3>
+
+
+        <p style="margin-left:4%; margin-bottom:2%;">
+            <a  class="icon fs-5" asp-action="Create">
+                <i class="bi bi-plus-circle"></i>
+                Add New
+            </a>
+        </p>
+
+<table style="width:70%; margin-left:4%;" class="table table-bordered thead-dark  p-2">
+    
+            <thead>
+                <tr>
+                    <th class="fs-5">Doctor</th>
+                    <th class="fs-5">Email</th>
+                    <th class="fs-5">Department</th>
+                    <th class="fs-5">Nurse</th>
+                    <th class="fs-5">Schedule</th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doctor in Model)
+                {
+                    <tr>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.DoctorName)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.DoctorEmail)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.Department)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.Nurse.NurseName)</td>
+                        <td class="fs-6">@Html.DisplayFor(modelItem => doctor.Schedule)</td>
+                        <td class="fs-6">
+                            <a asp-action="Update" asp-route-id="@doctor.DoctorId">Edit</a> |
+                            <a style="color:red; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#deleteModal-@doctor.DoctorId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @foreach (var doctor in Model)
+        {
+            <!-- Modal for each doctor -->
+            <div class="modal fade" style="margin-top:10%; margin-left:35%; width:25%;" id="deleteModal-@doctor.DoctorId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel-@doctor.DoctorId" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 style="margin-left:40%;"><i style="color:red;" class="bi bi-exclamation-circle"></i></h1>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete Dr.@doctor.DoctorName ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+
+                            <!-- Form to handle delete -->
+                            <form style="margin-right:30%;" asp-action="Delete" asp-route-id="@doctor.DoctorId" method="post">
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+   
+
+
+    
+

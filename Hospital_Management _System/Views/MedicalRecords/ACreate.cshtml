@@ -1,0 +1,123 @@
+﻿ @model Hospital_Management__System.ViewModels.MedicalRecordViewModel
+
+@{
+    ViewData["Title"] = "ACreate";
+}
+
+
+<div class="row justify-content-center ">
+    <div class="col-md-8 p-2">
+        <form asp-action="ACreate" class="justify-content-center p-2">
+            <h3 style="margin-right:10%; margin-top:2%; margin-bottom:10%;" class="fw-semibold text-center mb-4">Add Appointment</h3>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div style="margin-left:4%;" class="row">
+
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="PatiantName" class="control-label">Patient </label>
+                    <input asp-for="PatiantName" class="form-control" />
+                    <span asp-validation-for="PatiantName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input type="email" asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="PatiantAge" class="control-label"></label>
+                    <input asp-for="PatiantAge" class="form-control" />
+                    <span asp-validation-for="PatiantAge" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="PatiantPhone" class="control-label"></label>
+                    <input asp-for="PatiantPhone" class="form-control" />
+                    <span asp-validation-for="PatiantPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="PatiantAddress" class="control-label"></label>
+                    <input asp-for="PatiantAddress" class="form-control" />
+                    <span asp-validation-for="PatiantAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="Department" class="control-label">Department</label>
+                    <select asp-for="Department" name="department" class="form-select" id="departmentSelect" onchange="filterDoctorsByDepartment()">
+                        <option value="select department">select department</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Hepatology">Hepatology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Surgery">Surgery</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Radiology">Radiology</option>
+                        <option value="Pathology">Pathology</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="DoctorId" class="control-label">Doctor</label>
+                    <select asp-for="DoctorId" class="form-control" id="doctorSelect" asp-items="ViewBag.DoctorsList">
+                        <option value="select doctor">select doctor </option>
+                    </select>
+                </div>
+                <div class="form-group mb-3 col-5">
+                    <label asp-for="Appointment" class="control-label"></label>
+                    <input asp-for="Appointment" class="form-control" />
+                    <span asp-validation-for="Appointment" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3 col-10">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                
+                </div>
+         
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsFinished" /> @Html.DisplayNameFor(model => model.IsFinished)
+                    </label>
+                </div>
+                <div style="margin-left:38%;" class="form-group">
+                    <input style=" width:13%;" type="submit" value="Create"class="btn btn-primary mb-2 p-2" />
+                </div>
+                <div style="margin-left:38%;">
+                    <a asp-action="Index"><i class="bi bi-arrow-left mb-3"></i> Back to List</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div> 
+
+<!-- JavaScript for filtering doctors by department -->
+<script>
+    function filterDoctorsByDepartment() {
+        var department = document.getElementById("departmentSelect").value;
+        var doctorSelect = document.getElementById("doctorSelect");
+
+        // Clear existing doctor options
+        doctorSelect.innerHTML = '<option value="">Select a Doctor</option>';
+
+        // If a department is selected
+        if (department) {
+            // Make an AJAX request to get doctors
+            $.ajax({
+                url: '@Url.Action("GetDoctorsByDepartment", "MedicalRecords")', // Use the correct controller name
+                type: 'GET',
+                data: { department: department },
+                success: function (doctors) {
+                    console.log("Doctors received: ", doctors); // Check the response in console
+                    // Populate the doctor dropdown with the filtered doctors
+                    doctors.forEach(function (doctor) {
+                        var option = document.createElement("option");
+                        option.value = doctor.doctorId; // Assuming doctorId is the ID field
+                        option.text = doctor.doctorName; // Assuming doctorName is the name field
+                        doctorSelect.appendChild(option);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+    }
+</script>
+

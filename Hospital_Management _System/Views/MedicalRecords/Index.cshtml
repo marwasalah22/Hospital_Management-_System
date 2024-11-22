@@ -1,0 +1,47 @@
+﻿
+
+@model IEnumerable<Hospital_Management__System.Models.MedicalRecord>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (!Model.Any())
+{
+    <h5 style="margin-left:3%; margin-top:2%; color:red;">No appointments found</h5>
+}
+else
+{
+    <h3 style="margin-left:3%; " class="fw-semibold mt-5 mb-3">Appointments</h3>
+    <table style="width:60%; margin-left:3%;" class="table table-bordered thead-dark mt-4 p-2">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Doctor</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Appointment)</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.PatiantName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PatiantAge)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PatiantAddress)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PatiantPhone)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Doctor.DoctorName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Appointment)</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+

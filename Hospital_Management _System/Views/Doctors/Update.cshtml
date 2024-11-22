@@ -1,0 +1,97 @@
+﻿@model Hospital_Management__System.ViewModels.DoctorViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <h2 class="fw-semibold mt-5" style="margin-left:30%; margin-bottom:25px;">Edit Doctor</h2>
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row justify-content-evenly">
+                <div class="form-group mb-3 col-9">
+                    <label asp-for="DoctorName" class="control-label">Doctor</label>
+                    <input asp-for="DoctorName" class="form-control" />
+                    <span asp-validation-for="DoctorName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-9">
+                    <label asp-for="DoctorEmail" class="control-label">Doctor</label>
+                    <input asp-for="DoctorEmail" class="form-control" />
+                    <span asp-validation-for="DoctorEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-9">
+                    <input type="hidden" asp-for="DoctorEmail" value="@ViewBag.UserEmail" />
+                </div>
+                <div class="form-group mb-3 col-9">
+                    <label asp-for="Department" class="control-label">Department</label>
+                    <select asp-for="Department" class="form-select" id="departmentSelect" onchange="filterNursesByDepartment()">
+                        <option value="">Select a Department</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Hepatology">Hepatology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Surgery">Surgery</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Radiology">Radiology</option>
+                        <option value="Pathology">Pathology</option>
+                    </select>
+                </div>
+                <!-- Nurse Dropdown -->
+                <div class="form-group mb-3 col-9">
+                    <label asp-for="NurseId" class="control-label">Nurse</label>
+                    <select asp-for="NurseId" class="form-select" id="nurseSelect" asp-items="ViewBag.nurses">
+                    </select>
+                    <span asp-validation-for="NurseId" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3 col-9">
+                    <label asp-for="Schedule" class="control-label">Schedule</label>
+                    <input asp-for="Schedule" class="form-control" />
+                    <span asp-validation-for="Schedule" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <input style="margin-left:44%;" type="submit" value="Update" class="btn btn-primary mb-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a style="margin-left:46%;" asp-action="Index"><i class="bi bi-arrow-left"></i> Back to List</a>
+</div>
+
+
+
+
+<script>
+    function filterNursesByDepartment() {
+        var department = document.getElementById("departmentSelect").value;
+
+        // Clear existing nurse options
+        var nurseSelect = document.getElementById("nurseSelect");
+        nurseSelect.innerHTML = '<option value="">Select a Nurse</option>';
+
+        // If a department is selected
+        if (department) {
+            // Make an AJAX request to get nurses
+            $.ajax({
+                url: '@Url.Action("GetNursesByDepartment", "Doctors")', // Ensure this is the correct action name
+                type: 'GET',
+                data: { department: department },
+                success: function (nurses) {
+                    // Populate the nurse dropdown with the filtered nurses
+                    nurses.forEach(function (nurse) {
+                        var option = document.createElement("option");
+                        option.value = nurse.nurseId; // Assuming nurseId is the ID field
+                        option.text = nurse.name; // Assuming name is the nurse's name field
+                        nurseSelect.appendChild(option);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+    }
+</script>

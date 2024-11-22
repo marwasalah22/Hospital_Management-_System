@@ -1,0 +1,48 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+
+}
+
+
+<div class="row mt-4 justify-content-center ">
+
+    <div class="col-lg-5 shadow-lg rounded-3 px-5 py-2 ">
+        <section>
+            <form class="justify-content-center" id="account" method="post">
+                <h1 class="text-center mb-5"> <i class="bi bi-person-add"></i> @ViewData["Title"]</h1>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password" class="form-label">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="Confirm-password" aria-required="true" placeholder="Confirm password" />
+                    <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 fw-normal fs-6 btn btn-lg btn-primary ">Sign Up</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+

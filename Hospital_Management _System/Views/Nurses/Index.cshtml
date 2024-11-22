@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Hospital_Management__System.Models.Nurse>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 style="margin-top:2%; margin-left:5%;" class="fw-semibold">Nurses</h3>
+
+
+<p style="margin-left:5%; margin-bottom:1%;">
+    <a class="icon fs-5" asp-action="Create">
+        <i class="bi bi-plus-circle"></i>
+        Add New
+    </a>
+</p>
+
+<table style="width:40%; margin-left:4%;" class="table table-bordered thead-dark mt-4 p-2">
+    <thead>
+        <tr>
+            <th class="fs-5">
+                Name
+            </th>
+            <th class="fs-5">
+                Email
+            </th>
+            
+            <th class="fs-5">
+                Department
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nurse in Model)
+        {
+            
+            <tr>
+                <td class="fs-6">
+                    @Html.DisplayFor(modelItem => nurse.NurseName)
+                </td>
+                <td class="fs-6">
+                    @Html.DisplayFor(modelItem => nurse.NurseEmail)
+                </td>
+                <td class="fs-6">
+                    @Html.DisplayFor(modelItem => nurse.NurseDepartment)
+                </td>
+                <td>
+                    @* <a asp-action="Delete" asp-route-id="@nurse.NurseId">Delete</a> *@
+                    <a  style="color:red; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#deleteModal-@nurse.NurseId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (var nurse in Model)
+{
+    <!-- Modal for each doctor -->
+    <div class="modal fade" style="margin-top:10%; margin-left:35%; width:23%;" id="deleteModal-@nurse.NurseId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel-@nurse.NurseId" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 style="margin-left:40%;"><i style="color:red;" class="bi bi-exclamation-circle"></i></h1>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete @nurse.NurseName ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+
+                    <!-- Form to handle delete -->
+                    <form style="margin-right:30%;" asp-action="Delete" asp-route-id="@nurse.NurseId" method="post">
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+    
